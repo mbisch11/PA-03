@@ -107,39 +107,6 @@ public class BinarySearchTree <T extends Comparable<T>> {
         partition(current.right, x, partitioned);
     }
 
-    public String toString() {
-        int height = getHeight(root);
-        if (height == 0) {
-            return "N";
-        }
-        int size = (int) Math.pow(2, height) - 1;
-        String[] arr = new String[size];
-        fillArray(root, 0, arr, size);
-        return String.join(", ", arr);
-    }
-
-    private void fillArray(Node node, int index, String[] arr, int size) {
-        if (index >= size) {
-            return;
-        }
-        if (node == null) {
-            arr[index] = "N";
-            return;
-        }
-        arr[index] = node.data.toString();
-        fillArray(node.left, 2 * index + 1, arr, size);
-        fillArray(node.right, 2 * index + 2, arr, size);
-    }
-
-    private int getHeight(Node node) {
-        if (node == null) {
-            return 0;
-        }
-        int leftH = getHeight(node.left);
-        int rightH = getHeight(node.right);
-        return 1 + Math.max(leftH, rightH);
-    }
-
     public BinarySearchTree<T> rebalance() {
         ArrayList<T> sorted = new ArrayList<>();
         inOrder(root, sorted);
