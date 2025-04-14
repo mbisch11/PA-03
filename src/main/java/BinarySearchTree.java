@@ -44,7 +44,7 @@ public class BinarySearchTree <T extends Comparable<T>> {
 
     private Node delete(Node current, T x) {
         if (current == null) {
-            return null;  // should not happen because of pre-check in delete(x)
+            return null;
         }
         int cmp = x.compareTo(current.data);
         if (cmp < 0) {
@@ -52,14 +52,12 @@ public class BinarySearchTree <T extends Comparable<T>> {
         } else if (cmp > 0) {
             current.right = delete(current.right, x);
         } else {
-            // Node with only one child or no child:
             if (current.left == null) {
                 return current.right;
             }
             if (current.right == null) {
                 return current.left;
             }
-            // Node with two children: replace the data with the smallest from the right subtree.
             Node smallest = getMin(current.right);
             current.data = smallest.data;
             current.right = delete(current.right, smallest.data);
@@ -111,11 +109,9 @@ public class BinarySearchTree <T extends Comparable<T>> {
 
     public String toString() {
         int height = getHeight(root);
-        // For an empty tree, height will be 0.
         if (height == 0) {
             return "N";
         }
-        // In a complete binary tree of height h, the total number of nodes is 2^h - 1.
         int size = (int) Math.pow(2, height) - 1;
         String[] arr = new String[size];
         fillArray(root, 0, arr, size);
