@@ -32,4 +32,56 @@ public class BinarySearchTree <T extends Comparable<T>> {
         }
         return current;
     }
+
+    public void delete(T x) {
+        root = delete(root, x);
+    }
+
+    private Node delete(Node current, T x) {
+        if (current == null) {
+            return null;
+        }
+        int cmp = x.compareTo(current.data);
+        if (cmp < 0) {
+            current.left = delete(current.left, x);
+        } else if (cmp > 0) {
+            current.right = delete(current.right, x);
+        } else {
+            if (current.left == null) {
+                return current.right;
+            }
+            if (current.right == null) {
+                return current.left;
+            }
+            Node smallest = getMin(current.right);
+            current.data = smallest.data;
+            current.right = delete(current.right, smallest.data);
+        }
+        return current;
+    }
+
+    private Node getMin(Node current) {
+        while (current.left != null) {
+            current = current.left;
+        }
+        return current;
+    }
+
+    public boolean contains(T x) {
+        return contains(root, x);
+    }
+
+    private boolean contains(Node current, T x) {
+        if (current == null) {
+            return false;
+        }
+        int cmp = x.compareTo(current.data);
+        if (cmp == 0) {
+            return true;
+        } else if (cmp < 0) {
+            return contains(current.left, x);
+        } else {
+            return contains(current.right, x);
+        }
+    }
 }
